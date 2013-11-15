@@ -16,10 +16,10 @@ import com.amazonaws.services.rds.AmazonRDSClient;
 
 public class RDSManager {
 	private String jdbcUrl;
-	private String dbName = "my_youtube1"; 
-	private String userName = "root"; 
-	private String password = "LarryCane08"; 
-	private String hostname = "my-youtube-instance1.cnjkjmiq1vsn.us-east-1.rds.amazonaws.com";
+	private String dbName = "MyYouTube"; 
+	private String userName = "MyYouTube"; 
+	private String password = "polymyyoutube"; 
+	private String hostname = "assignment2.cbg6bqxtgzic.us-east-1.rds.amazonaws.com";
 	private String port = "3306";
 	//private Statement statement = null;
 	private PreparedStatement preparedStatement = null;

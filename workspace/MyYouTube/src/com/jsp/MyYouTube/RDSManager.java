@@ -1,11 +1,18 @@
 package com.jsp.MyYouTube;
 
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
@@ -13,6 +20,7 @@ import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
 import com.amazonaws.services.rds.AmazonRDSClient;
+import com.mysql.jdbc.Statement;
 
 public class RDSManager {
 	private String jdbcUrl;
@@ -36,91 +44,108 @@ public class RDSManager {
 		new AmazonRDSClient(credentialsProvider);
 		//make connection to RDS
 		jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
-		System.out.println("Reaching here#1");
 		Class.forName("com.mysql.jdbc.Driver");
-		System.out.println("Reaching here#2");
 		connection = DriverManager.getConnection(jdbcUrl);
-		System.out.println("Reaching here#3");
+		System.out.println("Connect to RDS successfully");
 	}
 	
 	public void dropTable() throws SQLException {
 		String dropTableQuery = "DROP TABLE VideoRating";
 		preparedStatement = connection.prepareStatement(dropTableQuery);
 		preparedStatement.execute();
-		System.out.println("Reaching here#6");
 	}
 	
-	public void createTable() throws SQLException {
-		String createTableQuery = "CREATE TABLE VideoRating (VideoName TINYTEXT, AvgRating DOUBLE(2,1), RatingTimes INT(10))";
-		
-		preparedStatement = connection.prepareStatement(createTableQuery);
-		preparedStatement.execute();
-		System.out.println("Reaching here#5");
-		
-	}
+//	public void createTable() throws SQLException {
+//		String createTableQuery = "CREATE TABLE VideoRating (ID VideoName TINYTEXT, AvgRating DOUBLE(2,1), RatingTimes INT(10))";
+//		
+//		preparedStatement = connection.prepareStatement(createTableQuery);
+//		preparedStatement.execute();
+//		
+//	}
 	
-	public double readObjectRating(String videoName) throws InterruptedException, SQLException {
+	public double readObjectRating(int ID) throws InterruptedException, SQLException {
 		double rating = 0;
-		String selectQuery = "SELECT * FROM VideoRating WHERE VideoName = ?";
+		String selectQuery = "SELECT * FROM VideoRating WHERE ID = ?";
 		preparedStatement = connection.prepareStatement(selectQuery);
-		preparedStatement.setString(1, videoName);
+		preparedStatement.setInt(1, ID);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next()){
-			rating = resultSet.getDouble("AvgRating");
+			rating = resultSet.getDouble("avgRate");
 		}
 		return rating;
 			
 	}
 
-	public Map<String, Double> getVideoList() throws SQLException {
-		Map<String, Double> videoList = new HashMap<String, Double>();
+	public List<VideoInfo> getVideoList() throws SQLException {
+		List videoList = new ArrayList<VideoInfo>();
 		String getVideoListQuery = "SELECT * FROM VideoRating";
 		preparedStatement = connection.prepareStatement(getVideoListQuery);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()) {
-			String videoName = resultSet.getString("VideoName");
-			Double avgRating = resultSet.getDouble("AvgRating");
-			System.out.println("The video name is " + videoName + ", the rating is " + avgRating);
-			videoList.put(videoName, avgRating);
+			int ID = resultSet.getInt("ID");
+			String name = resultSet.getString("name");
+			Double avgRate = resultSet.getDouble("avgRate");
+			String url = resultSet.getString("url");
+			int rateTimes = resultSet.getInt("rateTimes");
+			String upload = resultSet.getString("uploadTime");
+			System.out.println("The video name is " + name + ", the rating is " + avgRate);
+			//videoList.put(videoName, avgRating);
+			videoList.add(new VideoInfo(ID,name,upload,avgRate,rateTimes,url));
 		}
 		return videoList;
 	}
 	
-	public void updateRating(String videoName, int currentRate) throws SQLException {
-		String selectQuery = "SELECT * FROM VideoRating WHERE VideoName = ?";
+	public void updateRating(int ID, int currentRate) throws SQLException {
+		String selectQuery = "SELECT * FROM VideoRating WHERE ID = ?";
 		preparedStatement = connection.prepareStatement(selectQuery);
-		preparedStatement.setString(1, videoName);
+		preparedStatement.setInt(1, ID);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		double avgRating = 0;
 		int ratingTimes = 0;
 		while(resultSet.next()){
-			avgRating = resultSet.getDouble("AvgRating");
-			ratingTimes = resultSet.getInt("RatingTimes");
+			avgRating = resultSet.getDouble("avgRate");
+			ratingTimes = resultSet.getInt("rateTimes");
 			double sum = avgRating*ratingTimes + currentRate;
 			ratingTimes++;
 			double rating = sum/ratingTimes;
 			System.out.println("Sum: " + sum + "; Former avgRating: " + avgRating + "; rating: "  + rating);
-			String updateQuery = "UPDATE VideoRating SET AvgRating = ?, RatingTimes = ? WHERE VideoName = ?";
+			String updateQuery = "UPDATE VideoRating SET AvgRating = ?, RatingTimes = ? WHERE ID = ?";
 			preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setDouble(1, rating);
 			preparedStatement.setInt(2, ratingTimes);
-			preparedStatement.setString(3, videoName);
+			preparedStatement.setInt(3, ID);
 			preparedStatement.executeUpdate();
 		}
 		
 	}
 	
-	public void insertRecord(String videoName) throws SQLException {
-		String insertQuery = "INSERT INTO VideoRating VALUES (?, 0, 0)";
-		preparedStatement = connection.prepareStatement(insertQuery);
-		preparedStatement.setString(1, videoName);
-		preparedStatement.execute();
+	public void insertRecord(VideoInfo video){
+		try{
+		System.out.println("Start insert");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		System.out.println(dateFormat.format(date));
+		String insertQuery = "INSERT INTO VideoRating(name,uploadTime,url) "
+				+ "VALUES ('"+video.name+"', '"+dateFormat.format(date)+"', '"+video.url+"');";
+		System.out.println(insertQuery);
+		Statement st = (Statement) connection.createStatement();
+		st.execute(insertQuery);
+//		preparedStatement = connection.prepareStatement(insertQuery);
+//		preparedStatement.setString(1, video.name);
+//		preparedStatement.setTimestamp(2, timestamp);
+//		preparedStatement.setString(3, video.url);
+//		preparedStatement.execute();
+		System.out.println("End insert");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 	
-	public void deleteRecord(String videoName) throws SQLException {
-		String deleteQuery = "DELETE FROM VideoRating WHERE VideoName = ?";
+	public void deleteRecord(int ID) throws SQLException {
+		String deleteQuery = "DELETE FROM VideoRating WHERE ID = ?";
 		preparedStatement = connection.prepareStatement(deleteQuery);
-		preparedStatement.setString(1, videoName);
+		preparedStatement.setInt(1, ID);
 		boolean result = preparedStatement.execute();
 		if (result) {
 			System.out.println("The record has been deleted");

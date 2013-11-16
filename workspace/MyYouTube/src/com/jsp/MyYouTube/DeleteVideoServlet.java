@@ -28,10 +28,11 @@ public class DeleteVideoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("Reaching deleteVideo");
-		String videoName = request.getParameter("videoName");
+		int ID = Integer.parseInt(request.getParameter("ID"));
+		String videoName = request.getParameter("ID");
 		try {
 			RDSManager rdsManager = new RDSManager();
-			rdsManager.deleteRecord(videoName);
+			rdsManager.deleteRecord(ID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,6 +54,7 @@ public class DeleteVideoServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		doGet(request,response);
 	}
 
 }

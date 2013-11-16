@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>MyYouTube</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>DeleteVideoServlet</display-name>
+    <servlet-name>DeleteVideoServlet</servlet-name>
+    <servlet-class>com.jsp.MyYouTube.DeleteVideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteVideoServlet</servlet-name>
+    <url-pattern>/DeleteVideoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ServletUpload</display-name>
+    <servlet-name>ServletUpload</servlet-name>
+    <servlet-class>com.jsp.MyYouTube.ServletUpload</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletUpload</servlet-name>
+    <url-pattern>/ServletUpload</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateRatingServlet</display-name>
+    <servlet-name>UpdateRatingServlet</servlet-name>
+    <servlet-class>com.jsp.MyYouTube.UpdateRatingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateRatingServlet</servlet-name>
+    <url-pattern>/UpdateRatingServlet</url-pattern>
+  </servlet-mapping>
+</web-app>

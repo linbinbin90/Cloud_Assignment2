@@ -43,16 +43,16 @@ public class UpdateRatingServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		String videoName = request.getParameter("videoname");
+		int ID = Integer.parseInt(request.getParameter("ID"));
 		int rating = Integer.parseInt(request.getParameter("rating"));
-		System.out.println("Updating: filename-" +videoName + "; rating-" + rating );
+		System.out.println("Updating: ID=" +ID + "; rating=" + rating );
 		try {
-			rdsManager.updateRating(videoName, rating);
+			rdsManager.updateRating(ID, rating);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		response.sendRedirect("/MyYouTube/MainPage.jsp");
+		response.sendRedirect("/MyYouTube/list.jsp");
 		
 	}
 

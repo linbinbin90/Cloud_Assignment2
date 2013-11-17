@@ -20,5 +20,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Administrator/Downloads/commons-fileupload-1.3-bin/commons-fileupload-1.3/lib/commons-fileupload-1.3.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/MySQL/MySQL Connector J/mysql-connector-java-5.1.27-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator/Desktop/commons-io-2.4-bin/commons-io-2.4/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

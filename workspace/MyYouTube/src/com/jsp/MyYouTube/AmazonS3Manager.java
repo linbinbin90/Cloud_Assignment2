@@ -21,7 +21,7 @@ public class AmazonS3Manager {
 	
 	private AmazonS3Client s3Client;
 	
-	private final String BUCKET_NAME = "manicmovier_videobucket";
+	private final String BUCKET_NAME = "cloudcompute";
 	
 	public AmazonS3Manager() {
 

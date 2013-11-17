@@ -7,11 +7,7 @@
 <title>MyYouTube: Upload your video</title>
 </head>
 <body>
-<!-- <form action="./Servletupload.java" method="GET">
-First Name: <input type="text" name="first_name">
-<br />
-Last Name: <input type="text" name="last_name" />
-<input type="submit" value="Upload" /> -->
+
 
 <form method="POST" enctype="multipart/form-data" action="./ServletUpload">
   File to upload: <input type="file" name="upfile"><br/>

@@ -30,6 +30,7 @@ public class UpdateRatingServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 		try {
 			rdsManager = new RDSManager();
 		} catch (SQLException e) {
@@ -44,7 +45,7 @@ public class UpdateRatingServlet extends HttpServlet {
 		}
 		
 		int ID = Integer.parseInt(request.getParameter("ID"));
-		int rating = Integer.parseInt(request.getParameter("rating"));
+		int rating = Integer.parseInt(request.getParameter("score"+ID));
 		System.out.println("Updating: ID=" +ID + "; rating=" + rating );
 		try {
 			rdsManager.updateRating(ID, rating);
@@ -55,5 +56,7 @@ public class UpdateRatingServlet extends HttpServlet {
 		response.sendRedirect("/MyYouTube/list.jsp");
 		
 	}
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doPost(request,response);
+	}
 }

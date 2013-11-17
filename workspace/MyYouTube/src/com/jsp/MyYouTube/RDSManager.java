@@ -109,7 +109,7 @@ public class RDSManager {
 			ratingTimes++;
 			double rating = sum/ratingTimes;
 			System.out.println("Sum: " + sum + "; Former avgRating: " + avgRating + "; rating: "  + rating);
-			String updateQuery = "UPDATE VideoRating SET AvgRating = ?, RatingTimes = ? WHERE ID = ?";
+			String updateQuery = "UPDATE VideoRating SET avgRate = ?, rateTimes = ? WHERE ID = ?";
 			preparedStatement = connection.prepareStatement(updateQuery);
 			preparedStatement.setDouble(1, rating);
 			preparedStatement.setInt(2, ratingTimes);

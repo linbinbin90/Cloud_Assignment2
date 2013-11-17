@@ -117,6 +117,7 @@ for(i=0;i<cs.length;i++){
 			
 			for(VideoInfo movie : movieList) {
 		  %>
+		  <form action=<%="./DeleteVideoServlet?ID="+movie.ID%> method="POST">
           <tr>
             <td height="20" bgcolor="#FFFFFF" name="ID"><div align="center"><span class="STYLE1"><%=movie.ID %></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="name"><div align="center"><span class="STYLE1"><%=movie.name %></span></div></td>
@@ -125,9 +126,9 @@ for(i=0;i<cs.length;i++){
             <td height="20" bgcolor="#FFFFFF" name="rateTimes"><div align="center"><span class="STYLE1"><%=movie.rateTimes %></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="url"><div align="center"><span class="STYLE1"><%=movie.url %></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="Actions"><div align="center"><span class="STYLE4">
-            <img src="images/edt.gif" width="16" height="16" /><a href="">Edit</a>&nbsp; &nbsp;
-            <img src="images/del.gif" width="16" height="16" /><a href=<%="/DeleteVideoServlet?ID="+movie.ID%>>Delete</a></span></div></td>
+            <input type="submit" value="Delete" /></span></div></td>
           </tr>
+          </form>
           <%} %>
           
         </table></td>

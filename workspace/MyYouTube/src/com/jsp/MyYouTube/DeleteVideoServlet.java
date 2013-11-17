@@ -45,8 +45,8 @@ public class DeleteVideoServlet extends HttpServlet {
 		}
 			
 		
-		AmazonS3Manager s3Manager = new AmazonS3Manager();
-		s3Manager.deleteObject(videoName);
+//		AmazonS3Manager s3Manager = new AmazonS3Manager();
+//		s3Manager.deleteObject(videoName);
 	}
 
 	/**

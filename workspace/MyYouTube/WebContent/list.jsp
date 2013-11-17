@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>Administrator</title>
+<title>List Page</title>
 <style type="text/css">
 <!--
 body {
@@ -93,7 +93,7 @@ function rateFunction(ID){
             <td width="46%" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td width="5%"><div align="center"><img src="images/tb.gif" width="16" height="16" /></div></td>
-                <td width="95%" class="STYLE1"><span class="STYLE3"></span>Adminstrator</td>
+                <td width="95%" class="STYLE1"><span class="STYLE3"></span>List Page</td>
               </tr>
             </table></td>
           </tr>
@@ -120,6 +120,7 @@ function rateFunction(ID){
 			
 			for(VideoInfo movie : movieList) {
 		  %>
+		  <form action=<%="./UpdateRatingServlet?ID="+movie.ID%> method="POST">
           <tr>
             <td height="20" bgcolor="#FFFFFF" name="name"><div align="center"><span class="STYLE1"><%=movie.name %></span></div></td>
             <td bgcolor="#FFFFFF"><div align="center" name="uploadTime"><span class="STYLE1"><%=movie.uploadTime %></span></div></td>
@@ -135,8 +136,9 @@ function rateFunction(ID){
             </select>
             </div></td>
             <td height="20" bgcolor="#FFFFFF" name="Actions"><div align="center"><span class="STYLE4">
-            <button onclick="rateFunction(${movie.ID})" value="Rate"></button></span></div></td>
+            <input type="submit" value="Rate" /></span></div></td>
           </tr>
+          </form>
           <%} %>
           
         </table></td>

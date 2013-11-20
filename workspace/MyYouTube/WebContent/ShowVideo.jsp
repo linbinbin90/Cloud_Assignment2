@@ -13,8 +13,24 @@
 <div id="myElement">Loading the player ...</div>
 
 <script type="text/javascript">
+var urlParams;
+(window.onpopstate = function () {
+    var match,
+        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+        search = /([^&=]+)=?([^&]*)/g,
+        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+        query  = window.location.search.substring(1);
+
+    urlParams = {};
+    while (match = search.exec(query))
+       urlParams[decode(match[1])] = decode(match[2]);
+})();
+//alert(urlParams.url);
+	//var url = "http://" + urlParams.url;
+	
     jwplayer("myElement").setup({
-        file: "https://s3.amazonaws.com/cloudcompute/3+-+1+-+Analysis+of+Algorithms+Introduction+(8-14).mp4",
+        //file: url,
+        file: "rtmp://s2mmqsjxyn90z1.cloudfront.net/cfx/st/" + urlParams.url,
         height: 360,
         width: 640
     });

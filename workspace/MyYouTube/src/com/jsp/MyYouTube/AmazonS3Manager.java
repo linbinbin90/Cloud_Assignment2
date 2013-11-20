@@ -50,16 +50,23 @@ public class AmazonS3Manager {
 		
 	}
 
-	void uploadObject(String filePath,String filename) {
-		File file = new File(filePath);
-		String temp[] = new String[2];
-		temp = filename.split("\\.");
-		PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, temp[0], file);
-		AccessControlList accessControlList = new AccessControlList();
-		accessControlList.grantPermission(GroupGrantee.AllUsers,Permission.Read);
-		putObjectRequest.withAccessControlList(accessControlList);
-		s3Client.putObject(putObjectRequest);
-		
+	String uploadObject(String filePath,String filename) {
+		try{
+			File file = new File(filePath);
+			String temp[] = new String[2];
+			//temp = filename.split("\\.");
+			PutObjectRequest putObjectRequest = new PutObjectRequest(BUCKET_NAME, filename, file);
+			System.out.println(filename);
+			AccessControlList accessControlList = new AccessControlList();
+			accessControlList.grantPermission(GroupGrantee.AllUsers,Permission.Read);
+			putObjectRequest.withAccessControlList(accessControlList);
+			s3Client.putObject(putObjectRequest);
+			String url = BUCKET_NAME + ".s3.amazonaws.com/"+filename;
+			return url;
+		}catch (Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	List<String> readAllFilesFromS3() {

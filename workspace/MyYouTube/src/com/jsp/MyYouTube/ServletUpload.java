@@ -39,19 +39,19 @@ public class ServletUpload extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println(new File(".").getCanonicalPath());
-//		RDSManager rdsManager = null;
-//		try {
-//			rdsManager = new RDSManager();
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (ClassNotFoundException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+		RDSManager rdsManager = null;
+		try {
+			rdsManager = new RDSManager();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		boolean isMulti = ServletFileUpload.isMultipartContent(request);
 		AmazonS3Manager s3Manager = new AmazonS3Manager();
 		System.out.println("Reaching here#1");
@@ -83,8 +83,8 @@ public class ServletUpload extends HttpServlet {
 							int read = 0;
 							while ((read = inputStream.read(b)) != -1) {
 								
-								System.out.println(read);
-								System.out.write(b, 0, read);
+//								System.out.println(read);
+//								System.out.write(b, 0, read);
 								
 								dataOutputStream.write(b, 0, read);
 							}
@@ -96,7 +96,9 @@ public class ServletUpload extends HttpServlet {
 							String temp[] = new String[2];
 							temp = fileName.split("\\.");
 							s3Manager.createS3Bucket();
-							s3Manager.uploadObject(filePath, temp[0]);
+							String url = s3Manager.uploadObject(filePath, fileName);
+							System.out.println(url);
+							rdsManager.insertRecord(new VideoInfo(fileName,url));
 							 //Update database
 //							rdsManager.insertRecord(temp[0]);
 //							System.out.println("The rating is " + rdsManager.readObjectRating(temp[0]));
@@ -111,7 +113,7 @@ public class ServletUpload extends HttpServlet {
 		}
 		
 		
-		response.sendRedirect("/MyYouTube/MainPage.jsp");
+		response.sendRedirect("/MyYouTube/list.jsp");
 	}
 
 	

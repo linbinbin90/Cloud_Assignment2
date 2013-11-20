@@ -11,6 +11,8 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,7 @@ public class RDSManager {
 	private String dbName = "MyYouTube"; 
 	private String userName = "MyYouTube"; 
 	private String password = "polymyyoutube"; 
-	private String hostname = "assignment2.cbg6bqxtgzic.us-east-1.rds.amazonaws.com";
+	private String hostname = "myyoutube.cbg6bqxtgzic.us-east-1.rds.amazonaws.com";
 	private String port = "3306";
 	//private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -76,8 +78,8 @@ public class RDSManager {
 			
 	}
 
-	public List<VideoInfo> getVideoList() throws SQLException {
-		List videoList = new ArrayList<VideoInfo>();
+	public ArrayList<VideoInfo> getVideoList() throws SQLException {
+		ArrayList<VideoInfo> videoList = new ArrayList<VideoInfo>();
 		String getVideoListQuery = "SELECT * FROM VideoRating";
 		preparedStatement = connection.prepareStatement(getVideoListQuery);
 		ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,6 +94,17 @@ public class RDSManager {
 			//videoList.put(videoName, avgRating);
 			videoList.add(new VideoInfo(ID,name,upload,avgRate,rateTimes,url));
 		}
+		
+		Collections.sort(videoList, new Comparator<VideoInfo>(){
+	        public int compare(VideoInfo o1, VideoInfo o2) {
+	            if (o1.avgRate < o2.avgRate)
+	                return 1;
+	            else if(o1.avgRate > o2.avgRate)
+	            	return -1;
+	            else
+	            	return 0;
+	        }
+	     });
 		return videoList;
 	}
 	

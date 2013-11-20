@@ -81,7 +81,7 @@ function rateFunction(ID){
 <body>
 <%
     RDSManager DBmanager = new RDSManager();
-    List<VideoInfo> movieList = DBmanager.getVideoList();
+    ArrayList<VideoInfo> movieList = DBmanager.getVideoList();
 	%>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
@@ -89,6 +89,15 @@ function rateFunction(ID){
       <tr>
         <td width="12" height="30"><img src="images/tab_03.gif" width="12" height="30" /></td>
         <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="46%" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="33%" class="STYLE1" align="center"><span class="STYLE3"></span><a href="./admin.jsp">Admin page</a></td>
+                <td width="33%" class="STYLE1" align="center"><span class="STYLE3"></span><a href="./list.jsp">List page</a></td>
+                <td width="34%" class="STYLE1" align="center"><span class="STYLE3"></span><a href="./upload.jsp">Upload page</a></td>
+              </tr>
+            </table></td>
+          </tr>
           <tr>
             <td width="46%" valign="middle"><table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
@@ -122,10 +131,10 @@ function rateFunction(ID){
 		  %>
 		  <form action=<%="./UpdateRatingServlet?ID="+movie.ID%> method="POST">
           <tr>
-            <td height="20" bgcolor="#FFFFFF" name="name"><div align="center"><span class="STYLE1"><%=movie.name %></span></div></td>
+            <td height="20" bgcolor="#FFFFFF" name="name"><div align="center"><span class="STYLE1"><a href=<%="./ShowVideo.jsp?url="+movie.url%>><%=movie.name %></a></span></div></td>
             <td bgcolor="#FFFFFF"><div align="center" name="uploadTime"><span class="STYLE1"><%=movie.uploadTime %></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="avgRate"><div align="center"><span class="STYLE1"><%=movie.avgRate %></span></div></td>
-            <td height="20" bgcolor="#FFFFFF" name="url"><div align="center"><span class="STYLE1"><%=movie.url %></span></div></td>
+            <td height="20" bgcolor="#FFFFFF" name="url"><div align="center"><span class="STYLE1"><a href=<%="rtmp://s2mmqsjxyn90z1.cloudfront.net/"+movie.url %>><%=movie.url %></a></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="rating"><div align="center">
             <select name=<%="score"+movie.ID%>>
             	<option value="5">5 point</option>

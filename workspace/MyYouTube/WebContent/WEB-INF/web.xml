@@ -39,4 +39,14 @@
     <servlet-name>UpdateRatingServlet</servlet-name>
     <url-pattern>/UpdateRatingServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InitializeServlet</display-name>
+    <servlet-name>InitializeServlet</servlet-name>
+    <servlet-class>com.jsp.MyYouTube.InitializeServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InitializeServlet</servlet-name>
+    <url-pattern>/InitializeServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

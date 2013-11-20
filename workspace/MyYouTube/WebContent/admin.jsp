@@ -10,16 +10,16 @@
 <style type="text/css">
 <!--
 body {
-	margin-left: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-	margin-bottom: 0px;
+        margin-left: 0px;
+        margin-top: 0px;
+        margin-right: 0px;
+        margin-bottom: 0px;
 }
 .STYLE1 {font-size: 12px}
 .STYLE3 {font-size: 12px; font-weight: bold; }
 .STYLE4 {
-	color: #03515d;
-	font-size: 12px;
+        color: #03515d;
+        font-size: 12px;
 }
 -->
 </style>
@@ -38,7 +38,7 @@ cs  =  source.children;
 //alert(cs.length);
 if  (cs[1].style.backgroundColor!=highlightcolor&&source.id!="nc"&&cs[1].style.backgroundColor!=clickcolor)
 for(i=0;i<cs.length;i++){
-	cs[i].style.backgroundColor=highlightcolor;
+        cs[i].style.backgroundColor=highlightcolor;
 }
 }
 
@@ -48,7 +48,7 @@ return
 if  (event.toElement!=source&&cs[1].style.backgroundColor!=clickcolor)
 //source.style.backgroundColor=originalcolor
 for(i=0;i<cs.length;i++){
-	cs[i].style.backgroundColor="";
+        cs[i].style.backgroundColor="";
 }
 }
 
@@ -63,11 +63,11 @@ cs  =  source.children;
 //alert(cs.length);
 if  (cs[1].style.backgroundColor!=clickcolor&&source.id!="nc")
 for(i=0;i<cs.length;i++){
-	cs[i].style.backgroundColor=clickcolor;
+        cs[i].style.backgroundColor=clickcolor;
 }
 else
 for(i=0;i<cs.length;i++){
-	cs[i].style.backgroundColor="";
+        cs[i].style.backgroundColor="";
 }
 }
 </script>
@@ -78,7 +78,7 @@ for(i=0;i<cs.length;i++){
 <%
     RDSManager DBmanager = new RDSManager();
     List<VideoInfo> movieList = DBmanager.getVideoList();
-	%>
+        %>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td height="30" background="images/tab_05.gif"><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -114,10 +114,10 @@ for(i=0;i<cs.length;i++){
             <td width="20%" height="22" background="images/bg.gif" bgcolor="#FFFFFF" class="STYLE1"><div align="center">Actions</div></td>
           </tr>
           <%
-			
-			for(VideoInfo movie : movieList) {
-		  %>
-		  <form action=<%="./DeleteVideoServlet?ID="+movie.ID%> method="POST">
+                        
+                        for(VideoInfo movie : movieList) {
+                  %>
+                  <form action=<%="./DeleteVideoServlet?ID="+movie.ID%> method="POST">
           <tr>
             <td height="20" bgcolor="#FFFFFF" name="ID"><div align="center"><span class="STYLE1"><%=movie.ID %></span></div></td>
             <td height="20" bgcolor="#FFFFFF" name="name"><div align="center"><span class="STYLE1"><%=movie.name %></span></div></td>
